@@ -76,7 +76,7 @@ folium.TileLayer(tiles='OpenStreetMap').add_to(base_map)
 base_map.add_to(mapcluster)
 
 cluster = folium.plugins.MarkerCluster(name='Clusters', overlay=False, control=True).add_to(mapcluster)
-all_clusters = folium.plugins.MarkerCluster(name='Alle gemeenten', show=False)
+all_clusters = folium.plugins.MarkerCluster(name='Alle gemeenten', overlay=False, control=True).add_to(mapcluster)
 for index, row in df_chargemap.iterrows():
     all_clusters.add_child(folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
     popup=row['AddressInfo.AddressLine1'])).add_to(mapcluster)
