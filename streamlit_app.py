@@ -75,8 +75,8 @@ base_map = folium.FeatureGroup(name='Basemap', overlay=True, control=False)
 folium.TileLayer(tiles='OpenStreetMap').add_to(base_map)
 base_map.add_to(mapcluster)
 
-cluster = folium.plugins.MarkerCluster(name='Clusters', overlay=False, control=True).add_to(mapcluster)
 all_clusters = folium.plugins.MarkerCluster(name='Alle gemeenten', overlay=False, control=True).add_to(mapcluster)
+cluster = folium.plugins.MarkerCluster(name='Clusters per gemeente', overlay=False, control=True).add_to(mapcluster)
 for index, row in df_chargemap.iterrows():
     all_clusters.add_child(folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
     popup=row['AddressInfo.AddressLine1'])).add_to(mapcluster)
@@ -102,7 +102,7 @@ for index, row in df_chargemap.iterrows():
     folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
                                                        popup=row['AddressInfo.AddressLine1']).add_to(marker_cluster)
     
-all_markers = folium.FeatureGroup(name='All markers', overlay=False, control=True)    
+all_markers = folium.FeatureGroup(name='Markers per gemeente', overlay=False, control=True)    
 map2.add_child(all_markers)
 
 for i in merged['Gemeentenaam'].unique():
