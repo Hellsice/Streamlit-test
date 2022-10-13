@@ -275,7 +275,7 @@ st.plotly_chart(fig2)
 
 #Chargemap
 st.subheader('Chargemap') 
-st.markdown('Dataframe van alle gemeenten. Deze is om aan de hand van de geregistreerde postcodes bij alle laadpalen, te bepalen in welke gemeente de laadpaal staat.
+st.markdown('Dataframe van alle gemeenten. Deze is om aan de hand van de geregistreerde postcodes bij alle laadpalen, te bepalen in welke gemeente de laadpaal staat.')
 st.dataframe(merged)
 st.markdown('Map van laadpalen per gemeente, aangegeven door markers.')
 st_data = folium_static(map)
