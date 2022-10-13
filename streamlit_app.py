@@ -1,14 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
-# !pip install xlrd
-# !pip install openpyxl
-# !pip install geopy
-# !pip install streamlit-folium
-
 import requests
 import pandas as pd
 from pandas import json_normalize
@@ -25,12 +14,6 @@ import plotly.graph_objects as go
 from statsmodels.formula.api import ols
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-# !pip install session.info
-# import session_info
-# session_info.show()
-
-
 
 df = pd.read_csv('voertuigen.csv')
 df = df.drop(columns=['Unnamed: 0'])
