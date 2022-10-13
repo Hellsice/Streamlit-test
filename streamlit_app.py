@@ -226,34 +226,34 @@ laadpaaldata = pd.read_csv('laadpaaldata.csv')
 # print(laadpaaldata.isna().sum().sum()) # Geen NaN waardes te vinden in deze dataset
 
 # De waarnemingen waarbij het opladen later begint dan eindigt verwijderen, dit is immers onmogelijk en wij hebben er geen goede verklaring voor
-laadpaaldata = laadpaaldata[laadpaaldata['Ended']>=laadpaaldata['Started']]
+# laadpaaldata = laadpaaldata[laadpaaldata['Ended']>=laadpaaldata['Started']]
 
-# De tijden omzetten naar een datetime waarde
-laadpaaldata['Started'] =  pd.to_datetime(laadpaaldata['Started'], format='%Y-%m-%d  %H:%M:%S', errors='coerce') # Day is out of range for month, dus errors='coerce'
-laadpaaldata['Ended'] =  pd.to_datetime(laadpaaldata['Ended'], format='%Y-%m-%d  %H:%M:%S', errors='coerce') # Day is out of range for month, dus errors='coerce'
-laadpaaldata['Maand'] = pd.DatetimeIndex(laadpaaldata['Started']).month
+# # De tijden omzetten naar een datetime waarde
+# laadpaaldata['Started'] =  pd.to_datetime(laadpaaldata['Started'], format='%Y-%m-%d  %H:%M:%S', errors='coerce') # Day is out of range for month, dus errors='coerce'
+# laadpaaldata['Ended'] =  pd.to_datetime(laadpaaldata['Ended'], format='%Y-%m-%d  %H:%M:%S', errors='coerce') # Day is out of range for month, dus errors='coerce'
+# laadpaaldata['Maand'] = pd.DatetimeIndex(laadpaaldata['Started']).month
 
-# Tijd berekenen dat de auto aangesloten staat aan de laadpaal en het verschil met de daadwerkelijke oplaadtijd
-laadpaaldata['LaadsessieAangesloten'] = laadpaaldata['Ended'] - laadpaaldata['Started']
-laadpaaldata['LaadsessieAangeslotenUren'] = laadpaaldata['LaadsessieAangesloten'].dt.components['days']*24 + laadpaaldata['LaadsessieAangesloten'].dt.components['hours'] + laadpaaldata['LaadsessieAangesloten'].dt.components['minutes']/60 + laadpaaldata['LaadsessieAangesloten'].dt.components['seconds']/(60*60)
-laadpaaldata['ConnectedAangeslotenDif'] = laadpaaldata['ConnectedTime'] - laadpaaldata['LaadsessieAangeslotenUren']
+# # Tijd berekenen dat de auto aangesloten staat aan de laadpaal en het verschil met de daadwerkelijke oplaadtijd
+# laadpaaldata['LaadsessieAangesloten'] = laadpaaldata['Ended'] - laadpaaldata['Started']
+# laadpaaldata['LaadsessieAangeslotenUren'] = laadpaaldata['LaadsessieAangesloten'].dt.components['days']*24 + laadpaaldata['LaadsessieAangesloten'].dt.components['hours'] + laadpaaldata['LaadsessieAangesloten'].dt.components['minutes']/60 + laadpaaldata['LaadsessieAangesloten'].dt.components['seconds']/(60*60)
+# laadpaaldata['ConnectedAangeslotenDif'] = laadpaaldata['ConnectedTime'] - laadpaaldata['LaadsessieAangeslotenUren']
 
-# De 5 waardes waarbij het verschil in ChargeTime en AangeslotenTime daadwerkelijk meet dan 0,1 uur verschilt
-laadpaaldata = laadpaaldata[((laadpaaldata['ConnectedAangeslotenDif'] < 0.1) & (laadpaaldata['ConnectedAangeslotenDif'] > 0)) | ((laadpaaldata['ConnectedAangeslotenDif'] > -0.1) & (laadpaaldata['ConnectedAangeslotenDif'] < 0))]
+# # De 5 waardes waarbij het verschil in ChargeTime en AangeslotenTime daadwerkelijk meet dan 0,1 uur verschilt
+# laadpaaldata = laadpaaldata[((laadpaaldata['ConnectedAangeslotenDif'] < 0.1) & (laadpaaldata['ConnectedAangeslotenDif'] > 0)) | ((laadpaaldata['ConnectedAangeslotenDif'] > -0.1) & (laadpaaldata['ConnectedAangeslotenDif'] < 0))]
 
-# Hele lange tijden van laadsessie, de aansluiting, eruit halen
-q_laad = laadpaaldata['LaadsessieAangeslotenUren'].quantile(0.965)
-laadpaaldata[laadpaaldata['LaadsessieAangeslotenUren']<q_laad]
-q_low_laad = laadpaaldata['LaadsessieAangeslotenUren'].quantile(0.035)
-q_hi_laad = laadpaaldata['LaadsessieAangeslotenUren'].quantile(0.965)
-laadpaaldata = laadpaaldata[(laadpaaldata["LaadsessieAangeslotenUren"] < q_hi_laad) & (laadpaaldata["LaadsessieAangeslotenUren"] > q_low_laad)]
+# # Hele lange tijden van laadsessie, de aansluiting, eruit halen
+# q_laad = laadpaaldata['LaadsessieAangeslotenUren'].quantile(0.965)
+# laadpaaldata[laadpaaldata['LaadsessieAangeslotenUren']<q_laad]
+# q_low_laad = laadpaaldata['LaadsessieAangeslotenUren'].quantile(0.035)
+# q_hi_laad = laadpaaldata['LaadsessieAangeslotenUren'].quantile(0.965)
+# laadpaaldata = laadpaaldata[(laadpaaldata["LaadsessieAangeslotenUren"] < q_hi_laad) & (laadpaaldata["LaadsessieAangeslotenUren"] > q_low_laad)]
 
-# Hele lange tijden van chargetime eruit halen
-q_charge = laadpaaldata['ChargeTime'].quantile(0.965)
-laadpaaldata[laadpaaldata['ChargeTime']<q_charge]
-q_low_charge = laadpaaldata['ChargeTime'].quantile(0.35)
-q_hi_charge = laadpaaldata['ChargeTime'].quantile(0.965)
-laadpaaldata = laadpaaldata[(laadpaaldata["ChargeTime"] < q_hi_charge) & (laadpaaldata["ChargeTime"] > q_low_charge)]
+# # Hele lange tijden van chargetime eruit halen
+# q_charge = laadpaaldata['ChargeTime'].quantile(0.965)
+# laadpaaldata[laadpaaldata['ChargeTime']<q_charge]
+# q_low_charge = laadpaaldata['ChargeTime'].quantile(0.35)
+# q_hi_charge = laadpaaldata['ChargeTime'].quantile(0.965)
+# laadpaaldata = laadpaaldata[(laadpaaldata["ChargeTime"] < q_hi_charge) & (laadpaaldata["ChargeTime"] > q_low_charge)]
 
 # print(laadpaaldata.head())
 st.dataframe(laadpaaldata)
