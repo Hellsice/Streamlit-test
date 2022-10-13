@@ -93,7 +93,7 @@ folium.TileLayer(tiles='OpenStreetMap').add_to(base_map)
 base_map.add_to(mapcluster)
 
 cluster = folium.plugins.MarkerCluster(name='Clusters', overlay=False, control=True).add_to(mapcluster)
-all_clusters = folium.plugins.FeatureGroupSubGroup(group=cluster, name='All', show=False)
+all_clusters = folium.plugins.MarkerCluster(name='Alle gemeenten', show=False)
 for index, row in df_chargemap.iterrows():
     all_clusters.add_child(folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
     popup=row['AddressInfo.AddressLine1'])).add_to(mapcluster)
@@ -254,7 +254,7 @@ st.title('2022-2023 sem-1 Case 3: Dashboard')
 st.header('Elektrisch mobiliteit en laadpalen')
 st.subheader(' Team 7: Olger, Bart, Annika, Estelle')
 st.markdown('In dit dashboard hebben wij gebruik gemaakt van de datasets OpenChargeMap, laadpaalgebruik en aantallen elektrische auto’s.')
-st.markdown('Hiermee hebben wij verbanden kunnen leggen over de toename van elektrische autos, tijd dat elektrische auto’s aan de laadpaal zitten.')
+st.markdown('Hiermee hebben wij verbanden gelgd over de toename van elektrische autos, tijd dat elektrische auto’s aan de laadpaal zitten en de laadpalen per gemeente.')
 
 #Elektrische auto's
 st.subheader('Aantallen elektrische autos')
@@ -266,22 +266,22 @@ st.markdown('Zie hier dataset hieronder')
 st.dataframe(df)
 st.markdown('Vanuit deze "Open bezine" dataset zijn er visualisaties gemaakt.')
 st.markdown('Figuur hieronder bevat een cumulatieve lijndiagram van het aantal voertuigen per maand per brandstof categorie.')
-st.markdown('Zoals te zien blijkt het aantal elektische voertuigen in de loop van de jaren meer toeneemt dan over brandstog categorien')
 st.plotly_chart(fig1)
+st.markdown('Zoals te zien blijkt het aantal elektische voertuigen in de loop van de jaren meer toeneemt dan de andere brandstof categorieën')
 st.markdown('Figuur hieronder bevat gegevens over de aanschaf elekrische autos over de jaren heen weer')
-st.markdown('Door onder aan het figuur de slider te gebruiken kan er gezien worden welke auto merk in dat jaar erbij is gekomen')
+st.markdown('Door onder aan het figuur de slider te gebruiken kan er gezien worden welk auto merk in dat jaar erbij is gekomen')
 st.markdown('Weer valt er op te merken dat er veel meer elektrische autos in de laatste jaren toeneemt')
 st.plotly_chart(fig2)
 
 #Chargemap
 st.subheader('Chargemap') 
-st.markdown('Dataframe van alle gemeenten. Deze is om aan de hand van de geregistreerde postcodes bij alle laadpalen, te bepalen in welke gemeente de laadpaal staat.')
+st.markdown('Met chargemap is opgevraagd wat de locaties zijn van alle laadpalen die zij geregistreerd hebben. Met de postcodes die er zijn aangegeven in de dataset en de volgende dataframe is bepaald bij welke gemeente welke laadpaal hoort.')
 st.dataframe(merged)
-st.markdown('Map van laadpalen per gemeente, aangegeven door markers.')
+st.markdown('Er zijn meerdere mappen gemaakt, de eerste geeft per gemeente aan waar de laadpalen staan door middel van markers.')
 st_data = folium_static(map)
-st.markdown('Map van de laadpalen per gemeente of allemaal')
+st.markdown('De tweede map geeft dit ook weer, maar dit keer als cluster markers. Hier is ook een optie toegevoegd voor alle gemeenten tegelijk.')
 st_data = folium_static(mapcluster)
-st.markdown('Een combinatie van de eerste twee mappen. Alle laadpalen weergeven met clusters of weergeven met markers per gemeente.')
+st.markdown('Deze map is een combinatie van beide. De eerste optie geeft alle laadpalen in alle gemeentes weer als een cluster marker. De tweede optie laat je kiezen welke gemeenten je wilt laten zien.')
 st_data = folium_static(map2)
             
             
