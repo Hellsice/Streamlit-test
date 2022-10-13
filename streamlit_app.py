@@ -377,7 +377,6 @@ aantal_per_jaar = df_elek.groupby('jaar_tenaamstelling')['Kenteken'].count().res
 groter_2017jaar = aantal_per_jaar[(aantal_per_jaar['jaar_tenaamstelling'] >= 2017)]
 
 groter_2017jaar['jaar_tenaamstelling'] = groter_2017jaar['jaar_tenaamstelling'].astype(np.int64)
-groter_2017jaar.jaar_tenaamstelling.dtype
 
 regressie = ols("Kenteken~ jaar_tenaamstelling", data=groter_2017jaar).fit()
 
