@@ -159,26 +159,26 @@ for i in merged['Gemeentenaam'].unique():
 folium.LayerControl(position='bottomleft', collapsed=False).add_to(mapcluster)
 
 
-map2 = folium.Map(location = [52.2129919, 5.2793703], zoom_start=7, tiles=None)
-base_map = folium.FeatureGroup(name='Basemap', overlay=True, control=False)
-folium.TileLayer(tiles='OpenStreetMap').add_to(base_map)
-base_map.add_to(map2)
-marker_cluster = folium.plugins.MarkerCluster(name='Clusters', overlay=False, control=True).add_to(map2)
-for index, row in df_chargemap.iterrows():
-    folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
-                                                       popup=row['AddressInfo.AddressLine1']).add_to(marker_cluster)
+# map2 = folium.Map(location = [52.2129919, 5.2793703], zoom_start=7, tiles=None)
+# base_map = folium.FeatureGroup(name='Basemap', overlay=True, control=False)
+# folium.TileLayer(tiles='OpenStreetMap').add_to(base_map)
+# base_map.add_to(map2)
+# marker_cluster = folium.plugins.MarkerCluster(name='Clusters', overlay=False, control=True).add_to(map2)
+# for index, row in df_chargemap.iterrows():
+#     folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
+#                                                        popup=row['AddressInfo.AddressLine1']).add_to(marker_cluster)
     
-all_markers = folium.FeatureGroup(name='All markers', overlay=False, control=True)    
-map2.add_child(all_markers)
+# all_markers = folium.FeatureGroup(name='All markers', overlay=False, control=True)    
+# map2.add_child(all_markers)
 
-for i in merged['Gemeentenaam'].unique():
-    globals()['%s' %i] = folium.plugins.FeatureGroupSubGroup(group=all_markers, name=i, show=False)
-    map2.add_child(globals()['%s' %i])
-    for index, row in df_chargemap.iterrows():
-        if row['Gemeentenaam'] == i:
-            globals()['%s' %i].add_child(folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
-                                                       popup=row['AddressInfo.AddressLine1'])).add_to(map2)
-folium.LayerControl(position='bottomleft', collapsed=False).add_to(map2)
+# for i in merged['Gemeentenaam'].unique():
+#     globals()['%s' %i] = folium.plugins.FeatureGroupSubGroup(group=all_markers, name=i, show=False)
+#     map2.add_child(globals()['%s' %i])
+#     for index, row in df_chargemap.iterrows():
+#         if row['Gemeentenaam'] == i:
+#             globals()['%s' %i].add_child(folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
+#                                                        popup=row['AddressInfo.AddressLine1'])).add_to(map2)
+# folium.LayerControl(position='bottomleft', collapsed=False).add_to(map2)
 # In[10]:
 
 
