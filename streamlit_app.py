@@ -14,6 +14,7 @@ import plotly.graph_objects as go
 from statsmodels.formula.api import ols
 import matplotlib.pyplot as plt
 import seaborn as sns
+import geopandas as gpd
 
 df = pd.read_csv('voertuigen.csv')
 df = df.drop(columns=['Unnamed: 0'])
