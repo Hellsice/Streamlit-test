@@ -54,15 +54,15 @@ fig2.update_layout(
 merged = pd.read_csv('merged.csv')
 df_chargemap = pd.read_csv('Chargemap data.csv')
 
-geojson = gpd.read_file('Grenzen_van_alle_Nederlandse_gemeenten_en_provincies.geojson')
-geojson = geojson.to_crs("EPSG:4326") 
+# geojson = gpd.read_file('Grenzen_van_alle_Nederlandse_gemeenten_en_provincies.geojson')
+# geojson = geojson.to_crs("EPSG:4326") 
 
-style = {
-    'color': 'red',
-    'weight': 2,
-    'fillColor': 'red',
-    'fillOpacity': 0.2
-}
+# style = {
+#     'color': 'red',
+#     'weight': 2,
+#     'fillColor': 'red',
+#     'fillOpacity': 0.2
+# }
 
 
 map = folium.Map(location = [52.2129919, 5.2793703], zoom_start=7, tiles=None)
@@ -79,9 +79,9 @@ for i in merged['Gemeentenaam'].unique():
         if row['Gemeentenaam'] == i:
             globals()['%s' %i].add_child(folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
                                                        popup=row['AddressInfo.AddressLine1'])).add_to(map)
-    for index, row in geojson.iterrows():
-      if row['GEMEENTENAAM'] == i:
-        globals()['%s' %i].add_child(folium.GeoJson(data=row['geometry'], zoom_on_click=True, style_function = lambda x: style)).add_to(map)
+#     for index, row in geojson.iterrows():
+#       if row['GEMEENTENAAM'] == i:
+#         globals()['%s' %i].add_child(folium.GeoJson(data=row['geometry'], zoom_on_click=True, style_function = lambda x: style)).add_to(map)
 folium.LayerControl(position='bottomleft', collapsed=False).add_to(map)
 
 
@@ -104,9 +104,9 @@ for i in merged['Gemeentenaam'].unique():
         if row['Gemeentenaam'] == i:
             globals()['%s' %i].add_child(folium.Marker(location=[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']],
                                                        popup=row['AddressInfo.AddressLine1'])).add_to(mapcluster)
-    for index, row in geojson.iterrows():
-      if row['GEMEENTENAAM'] == i:
-        globals()['%s' %i].add_child(folium.GeoJson(data=row['geometry'], zoom_on_click=True, style_function = lambda x: style)).add_to(mapcluster)
+#     for index, row in geojson.iterrows():
+#       if row['GEMEENTENAAM'] == i:
+#         globals()['%s' %i].add_child(folium.GeoJson(data=row['geometry'], zoom_on_click=True, style_function = lambda x: style)).add_to(mapcluster)
 
 folium.LayerControl(position='bottomleft', collapsed=False).add_to(mapcluster)
 
